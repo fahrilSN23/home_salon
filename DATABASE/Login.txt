@@ -1,0 +1,11 @@
+Halaman Kasir : http://localhost/NAMAFOLDER/administrator
+username : kasir
+password : kasir
+
+Halaman Owner : http://localhost/NAMAFOLDER/administrator
+username : owner
+password : owner
+
+Halaman Konsumen : http://localhost/NAMAFOLDER/auth/login
+email : fahrilsariannur@gmail.com
+password : pembeli

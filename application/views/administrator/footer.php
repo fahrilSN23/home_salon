@@ -1,0 +1,1 @@
+<strong>Copyright &copy;<?php echo date('Y'); ?> <a target='_BLANK' href="http://www.antcode.com"> Ant Code</a>.</strong> All rights reserved.
