@@ -14,12 +14,11 @@
                     <tr><th scope='row'>Harga</th>                    <td colspan='3'><input class='form-control' type='number' name='b'></td></tr>
                     <tr><th scope='row'>Deskripsi</th>               <td colspan='3'><textarea class='form-control' name='c'></textarea></td></tr>
                     <tr>
-                        <th scope='row'>Jam</th>
-                        <td><input class='form-control' type='number' name='d'></td>
                         <th scope='row'>Menit</th>
                         <td><input class='form-control' type='number' name='e'></td>
                     </tr>
-                    <tr><th scope='row'>Aktif</th>                   <td><input type='radio' name='f' value='1' checked> Aktif &nbsp; <input type='radio' name='f' value='2'> Tidak Aktif</td></tr>
+                    <tr><th scope='row'>Stok</th>                   <td><input class='form-control' type='number' name='f' value='1' min='1'> </tr>
+                    <tr><th scope='row'>Upload Gambar</th>              <td><input type='file' class='form-control' name='gambar'></td></tr>
                   </tbody>
                   </table>
                 </div>

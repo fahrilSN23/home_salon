@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Apr 2023 pada 01.56
+-- Waktu pembuatan: 11 Apr 2023 pada 08.02
 -- Versi server: 10.4.21-MariaDB
 -- Versi PHP: 7.4.24
 
@@ -31,6 +31,7 @@ CREATE TABLE `detil_pemesanan` (
   `id_detil_pemesanan` int(11) NOT NULL,
   `id_pemesanan` int(11) DEFAULT NULL,
   `id_produk` int(11) DEFAULT NULL,
+  `qty` int(5) DEFAULT NULL,
   `harga_pesan` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -38,24 +39,26 @@ CREATE TABLE `detil_pemesanan` (
 -- Dumping data untuk tabel `detil_pemesanan`
 --
 
-INSERT INTO `detil_pemesanan` (`id_detil_pemesanan`, `id_pemesanan`, `id_produk`, `harga_pesan`) VALUES
-(85, 56, 4, 35000),
-(86, 57, 4, 35000),
-(87, 58, 1, 450000),
-(100, 69, 4, 35000),
-(102, 71, 4, 35000),
-(103, 72, 4, 35000),
-(104, 73, 1, 450000),
-(105, 74, 9, 25000),
-(106, 75, 4, 35000),
-(107, 76, 4, 35000),
-(108, 76, 8, 55000),
-(109, 77, 9, 25000),
-(110, 77, 4, 35000),
-(111, 78, 1, 450000),
-(112, 78, 4, 35000),
-(113, 79, 4, 35000),
-(114, 80, 8, 55000);
+INSERT INTO `detil_pemesanan` (`id_detil_pemesanan`, `id_pemesanan`, `id_produk`, `qty`, `harga_pesan`) VALUES
+(85, 56, 4, NULL, 35000),
+(86, 57, 4, NULL, 35000),
+(87, 58, 1, NULL, 450000),
+(100, 69, 4, NULL, 35000),
+(102, 71, 4, NULL, 35000),
+(103, 72, 4, NULL, 35000),
+(104, 73, 1, NULL, 450000),
+(105, 74, 9, NULL, 25000),
+(106, 75, 4, NULL, 35000),
+(107, 76, 4, NULL, 35000),
+(108, 76, 8, NULL, 55000),
+(109, 77, 9, NULL, 25000),
+(110, 77, 4, NULL, 35000),
+(111, 78, 1, NULL, 450000),
+(112, 78, 4, NULL, 35000),
+(113, 79, 4, NULL, 35000),
+(114, 80, 8, NULL, 55000),
+(115, 81, 8, NULL, 55000),
+(124, 85, 4, 1, 35000);
 
 -- --------------------------------------------------------
 
@@ -166,7 +169,7 @@ CREATE TABLE `konfirmasi` (
   `no_rek` varchar(150) NOT NULL,
   `nama_pengirim` varchar(255) NOT NULL,
   `tanggal_transfer` date NOT NULL,
-  `bukti_transfer` varchar(255) NOT NULL
+  `bukti_transfer` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -176,10 +179,10 @@ CREATE TABLE `konfirmasi` (
 INSERT INTO `konfirmasi` (`id_konfirmasi`, `id_pemesanan`, `total_transfer`, `no_rek`, `nama_pengirim`, `tanggal_transfer`, `bukti_transfer`) VALUES
 (6, 69, 'Rp. 35,000', 'BRI : 123456789 (a.n. Home Salon)', 'donatur1@mail.com', '2023-02-22', 'kemeja-1.jpg'),
 (7, 76, 'Rp. 90,000', 'BRI : 123456789 (a.n. Home Salon)', 'tes', '2023-03-17', 'kemeja-11.jpg'),
-(8, 77, 'Rp. 60,000', 'BRI : 123456789 (a.n. Home Salon)', 'Fahril', '2023-03-19', '5226644-removebg.png'),
 (9, 78, 'Rp. 485,000', 'BRI : 123456789 (a.n. Home Salon)', 'pembeli2@mail.com', '2023-04-05', 'sfy.png'),
 (10, 79, 'Rp. 35,000', 'BRI : 123456789 (a.n. Home Salon)', 'test@mail.com', '2023-04-07', 'CV-ratna.png'),
-(11, 80, 'Rp. 55,000', 'BRI : 123456789 (a.n. Home Salon)', 'admin@mail.com', '2023-04-07', 'peta_kabupaten_merauke.jpg');
+(12, 81, 'Rp. 55,000', 'BRI : 123456789 (a.n. Home Salon)', 'test@mail.com', '2023-04-09', 'contoh-2.png'),
+(13, 85, 'Rp. 35,000', 'BRI : 123456789 (a.n. Home Salon)', 'test@mail.com', '2023-04-10', '122.png');
 
 -- --------------------------------------------------------
 
@@ -237,15 +240,16 @@ INSERT INTO `pemesanan` (`id_pemesanan`, `no_transaksi`, `id_pelanggan`, `no_ant
 (57, 'TRX-20230218141139', 1, 'HS-001', '2023-02-20 05:11:39', NULL, NULL, 0, NULL, 0, 0),
 (58, 'TRX-20230218141223', 1, 'HS-001', '2023-02-19 20:12:23', NULL, NULL, 0, NULL, 4, 1),
 (69, 'TRX-20230222203751', 1, 'HS-005', '2023-02-23 08:37:51', NULL, NULL, 2, NULL, 4, 1),
-(71, 'TRX-20230223073154', 1, 'HS-006', '2023-02-23 08:16:54', NULL, NULL, 0, NULL, 0, 0),
-(72, 'TRX-20230223074342', 1, 'HS-007', '2023-02-23 08:28:42', NULL, NULL, 0, NULL, 0, 0),
+(71, 'TRX-20230223073154', 1, 'HS-006', '2023-02-23 08:16:54', NULL, NULL, 0, '28000', 0, 2),
+(72, 'TRX-20230223074342', 1, 'HS-007', '2023-02-23 08:28:42', NULL, NULL, 0, '28000', 0, 2),
 (73, 'TRX-20230223074425', 1, 'HS-008', '2023-02-23 08:29:25', '2023-04-08 05:11:00', '12.png', 0, '360000', 0, 3),
 (74, 'TRX-20230223075629', 1, 'HS-009', '2023-02-23 08:41:29', NULL, NULL, 0, '20000', 0, 2),
 (76, 'TRX-20230317074156', 1, 'HS-002', '2023-03-19 14:35:00', NULL, NULL, 2, NULL, 4, 1),
-(77, 'TRX-20230319124029', 1, 'HS-003', '2023-03-19 14:50:00', NULL, NULL, 6, NULL, 4, 1),
-(78, 'TRX-20230405081705', 1, 'HS-001', '2023-04-06 09:55:00', NULL, NULL, 2, NULL, 4, 1),
+(77, 'TRX-20230319124029', 1, 'HS-003', '2023-03-19 14:50:00', NULL, NULL, 6, NULL, 0, 1),
+(78, 'TRX-20230405081705', 1, 'HS-001', '2023-04-06 09:55:00', NULL, NULL, 2, NULL, 0, 1),
 (79, 'TRX-20230407081122', 1, 'HS-001', '2023-04-07 10:35:00', '2023-04-07 11:39:00', '', 2, '28000', 2, 3),
-(80, 'TRX-20230407081854', 1, 'HS-002', '2023-04-07 11:20:00', NULL, NULL, 6, NULL, 1, 0);
+(81, 'TRX-20230409122631', 1, 'HS-001', '2023-04-09 14:20:00', '2023-04-09 14:30:00', '121.png', 1, '44000', 1, 3),
+(85, 'TRX-20230410090238', 1, 'HS-001', '2023-04-10 11:00:00', NULL, NULL, 6, '28000', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -272,20 +276,20 @@ CREATE TABLE `produk` (
   `nama` varchar(150) DEFAULT NULL,
   `harga` varchar(10) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
-  `jam` int(5) DEFAULT NULL,
   `menit` int(5) DEFAULT NULL,
-  `aktif` int(2) DEFAULT 1
+  `stok` int(11) DEFAULT NULL,
+  `gambar` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `produk`
 --
 
-INSERT INTO `produk` (`id_produk`, `nama`, `harga`, `deskripsi`, `jam`, `menit`, `aktif`) VALUES
-(1, 'Color Fives', '450000', 'Shampo', 1, 30, 1),
-(4, 'Shampo/dry', '35000', 'Shampo/dry', 0, 10, 1),
-(8, 'Gunting', '55000', 'Gunting', 0, 20, 1),
-(9, 'Gunting Poni', '25000', 'Gunting Poni', 0, 5, 1);
+INSERT INTO `produk` (`id_produk`, `nama`, `harga`, `deskripsi`, `menit`, `stok`, `gambar`) VALUES
+(1, 'Color Fives', '450000', 'Shampo', 30, 39, '—Pngtree—beauty_logo_8663284.png'),
+(4, 'Shampo/dry', '35000', 'Shampo/dry', 10, 20, 'download.png'),
+(8, 'Gunting', '55000', 'Gunting', 20, 28, '5226644-removebg.png'),
+(9, 'Gunting Poni', '25000', 'Gunting Poni', 5, 50, '2000_6276bc6c8b8fa.png');
 
 -- --------------------------------------------------------
 
@@ -448,7 +452,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `detil_pemesanan`
 --
 ALTER TABLE `detil_pemesanan`
-  MODIFY `id_detil_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id_detil_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT untuk tabel `identitas`
@@ -478,7 +482,7 @@ ALTER TABLE `jenis_to_produk`
 -- AUTO_INCREMENT untuk tabel `konfirmasi`
 --
 ALTER TABLE `konfirmasi`
-  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
@@ -490,19 +494,19 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT untuk tabel `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT untuk tabel `pemesanan_temp`
 --
 ALTER TABLE `pemesanan_temp`
-  MODIFY `id_detil_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_detil_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `tentangkami`

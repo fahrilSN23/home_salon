@@ -15,21 +15,12 @@
                     <tr><th scope='row'>Harga</th>                    <td colspan='3'><input class='form-control' type='number' name='b' value='$rows[harga]'></td></tr>
                     <tr><th scope='row'>Deskripsi</th>               <td colspan='3'><textarea class='form-control' name='c'>$rows[deskripsi]</textarea></td></tr>
                     <tr>
-                        <th scope='row'>Jam</th>
-                        <td><input class='form-control' type='number' name='d' value='$rows[jam]'></td>
                         <th scope='row'>Menit</th>
                         <td><input class='form-control' type='number' name='e' value='$rows[menit]'></td>
                     </tr>
-                    <tr>
-                        <th scope='row'>Aktif</th>
-                        <td>";
-                        if ($rows['aktif'] == 1) {
-                          echo "<input type='radio' name='f' value='1' checked> Aktif &nbsp; <input type='radio' name='f' value='2'> Tidak Aktif";
-                        } else {
-                          echo "<input type='radio' name='f' value='1'> Aktif &nbsp; <input type='radio' name='f' value='2' checked> Tidak Aktif";
-                        }
-                        echo "</td>
-                    </tr>
+                    <tr><th scope='row'>Stok</th>                   <td><input class='form-control' type='number' name='f' value='$rows[stok]' min='1'> </tr>
+                    <tr><th scope='row'>Ganti Gambar</th>                     <td><input type='file' class='form-control' name='gambar'><hr style='margin:5px'>";
+                                                                                 if ($rows['gambar'] != ''){ echo "<i style='color:red'>Gambar Saat ini : </i><a target='_BLANK' href='".base_url()."asset/foto_produk/$rows[gambar]'>$rows[gambar]</a>"; } echo "</td></tr></td></tr>
                   </tbody>
                   </table>
                 </div>

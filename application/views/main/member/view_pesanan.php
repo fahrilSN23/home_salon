@@ -56,6 +56,12 @@
                         $c_order = '<span class="badge badge-success">Pelanggan tiba tepat waktu</span>';
                       }elseif ($row['c_order']=='2'){
                         $c_order = '<span class="badge badge-danger">Pesanan Dibatalkan</span>';
+                      }elseif ($row['c_order']=='2'){
+                        $status = '<span class="badge bg-gray">Menunggu Pembayaran Admin</span>'; 
+                        $c_order = '<span class="badge badge-danger">Pesanan Dibatalkan</span>';
+                      }elseif ($row['c_order']=='3'){
+                        $status = '<span class="badge-pill badge-success">Refund Berhasil</span>'; 
+                        $c_order = '<span class="badge badge-danger">Pesanan Dibatalkan</span>';
                       }
 
                       if ($row['no_antrian'] == null) {
@@ -102,7 +108,7 @@
                         <td>
                           <center>
                             <?php
-                            if ($row['status']=='0'){
+                            if ($row['status']=='0' && $row['c_order'] < 2){
                               echo "<a style='margin-right:3px' class='btn btn-secondary btn-xs' title='Konfirmasi Pembayaran' href='".base_url()."konfirmasi?kode=$row[no_transaksi]'><span class='fa fa-check-square-o'></span></a>";
                             }
                             ?>

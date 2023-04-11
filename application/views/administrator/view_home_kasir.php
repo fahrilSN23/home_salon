@@ -4,7 +4,7 @@
       <span class="info-box-icon bg-aqua"><i class="fa fa-cubes"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Produk Perawatan</span>
-        <?php $jmla = $this->model_app->view_where('produk',array('aktif'=>1))->num_rows(); ?>
+        <?php $jmla = $this->model_app->view('produk')->num_rows(); ?>
         <span class="info-box-number"><?php echo $jmla; ?></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->

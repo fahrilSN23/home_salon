@@ -7,7 +7,7 @@ class Produk extends CI_Controller {
 		$data['keywords'] = keywords();
 		$data['iden'] = iden();
 		$data['record'] = $this->model_app->view_ordering('jenis','id_jenis','ASC');
-		$data['record1'] = $this->db->query("SELECT * FROM produk WHERE aktif = 1 ORDER BY id_produk ASC")->result_array();
+		$data['record1'] = $this->db->query("SELECT * FROM produk WHERE stok >= 1 ORDER BY id_produk ASC")->result_array();
 		$this->template->load('main/template_sub','main/produk',$data);
 	}
 

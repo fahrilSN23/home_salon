@@ -106,12 +106,12 @@
                              
                               <td><center>
                                 <a class='btn btn-success btn-xs' title='Detail Data' href='".base_url()."administrator/detail_pemesanan/$row[id_pemesanan]/$link'><span class='glyphicon glyphicon-search'></span> Detail</a> ";
-                                if ($row['status'] >= '1' AND $row['status'] <= '3' AND $row['c_order'] != 2){
+                                if ($row['status'] >= '1' AND $row['status'] <= '3' AND $row['c_order'] <= 1){
                                   echo "<a style='margin:0px 3px' class='btn btn-primary btn-xs' title='$detail' href='".base_url()."administrator/proses_pemesanan/$row[id_pemesanan]/$ubah' onclick=\"return confirm('Apa anda yakin untuk ubah status jadi $detail pada pesanan ini?')\"><span class='glyphicon glyphicon-$icon'></span></a> ";
                                 }
                                 if ($days > 0 AND $row['c_order'] != 1 AND $row['status'] <= 3) {
                                   echo "<a class='btn btn-info btn-xs' title='Tiba Tepat Waktu' href='".base_url()."administrator/cek_pemesanan/$row[id_pemesanan]/1' onclick=\"return confirm('Apa anda yakin pelanggan sudah tiba?')\"><span class='glyphicon glyphicon-check'></span></a> ";
-                                } elseif ($days < 0 AND $row['c_order'] != 2 AND $row['status'] <= 2) {
+                                } elseif ($days < 0 AND $row['c_order'] <= 1 AND $row['status'] <= 2) {
                                   echo "<a class='btn btn-danger btn-xs' title='Pesanan Dibatalkan' href='".base_url()."administrator/cek_pemesanan/$row[id_pemesanan]/2' onclick=\"return confirm('Apa anda yakin untuk membatalkan pesanan ini?')\"><span class='glyphicon glyphicon-remove'></span></a> ";
                                 }
                                 if ($days > 0 && $days <= 20) {

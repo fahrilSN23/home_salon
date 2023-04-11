@@ -49,8 +49,11 @@
                 <?=$p['nama']?>
                 </h6>
             </div>
+            <div class="img-box">
+              <img src="<?=base_url()?>asset/foto_produk/<?=$p['gambar']?>">
+            </div>
             <p><?=$p['deskripsi']?></p>
-            <p>Waktu Perawatan : <?=$p['jam']?> jam <?=$p['menit']?> menit</p>
+            <p>Waktu Perawatan : <?=$p['menit']?> menit</p>
             <div class="detail-box">
                 <h5>
                 Rp. <span><?=rupiah($p['harga'])?></span>

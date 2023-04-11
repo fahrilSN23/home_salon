@@ -1,5 +1,26 @@
+<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-interval="5000">
+      <img src="<?=base_url()?>asset/images/1.jpg" width="400px" height="600px" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item" data-interval="5000">
+      <img src="<?=base_url()?>asset/images/2.jpg" width="400px" height="600px" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item" data-interval="5000">
+      <img src="<?=base_url()?>asset/images/3.jpg" width="400px" height="600px" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-target="#carouselExampleInterval" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-target="#carouselExampleInterval" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </button>
+</div>
     <!-- slider section -->
-    <section class=" slider_section position-relative">
+    <!-- <section class=" slider_section position-relative">
       <div class="design-box">
         <img src="<?=base_url()?>template/images/design-1.png" alt="">
       </div>
@@ -37,7 +58,7 @@
         </div>
       </div>
 
-    </section>
+    </section> -->
     <!-- end slider section -->
   </div>
 
@@ -127,8 +148,11 @@
               <?=$p['nama']?>
             </h6>
           </div>
+          <div class="img-box">
+            <img src="<?=base_url()?>asset/foto_produk/<?=$p['gambar']?>">
+          </div>
           <p><?=$p['deskripsi']?></p>
-          <p>Waktu Perawatan : <?=$p['jam']?> jam <?=$p['menit']?> menit</p>
+          <p>Waktu Perawatan : <?=$p['menit']?> menit</p>
           <div class="detail-box">
             <h5>
               Rp. <span><?=rupiah($p['harga'])?></span>

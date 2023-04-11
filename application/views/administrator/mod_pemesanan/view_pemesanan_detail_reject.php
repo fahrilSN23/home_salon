@@ -69,12 +69,15 @@
                         }elseif ($rows['c_order']=='2'){
                             $status = '<span class="badge bg-gray">Menunggu Pembayaran Admin</span>';
                             $c_order = '<span class="badge bg-red">Pesanan Dibatalkan</span>';
+                        }elseif ($rows['c_order'] =='3'){
+                            $status = '<span class="badge bg-green">Refund Berhasil</span>'; 
+                            $c_order = '<span class="badge bg-red">Pesanan Dibatalkan</span>';
                         }
                         echo "$status <br> $c_order"; 
                         ?>
                     </td>
                 </tr>
-                <?php if ($rows['status'] != 4) { ?>
+                <?php if ($rows['c_order'] != 3) { ?>
                 <tr>
                     <td><button type='submit' name='submit' class='btn btn-success' style="margin-top: 5px;">Simpan</button></td>
                 </tr>

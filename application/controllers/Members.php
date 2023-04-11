@@ -40,16 +40,21 @@ class Members extends CI_Controller {
 
             $harga = $this->model_app->view_where('produk',array('id_produk'=>$id_produk))->row_array();
             $harga_konsumen = $harga['harga'];
+			$stok = $harga['stok'] - 1;
             $data = array('id_pemesanan'=>$this->session->idp,
                         'id_produk'=>$id_produk,
+						'qty' => 1,
                         'harga_pesan'=>$harga_konsumen);
+			$data1 = array('stok' => $stok);
             $this->model_app->insert('detil_pemesanan',$data);
+			$this->model_app->update('produk',$data1,array('id_produk'=>$id_produk));
             redirect('members/keranjang');
 		}else{
 			if ($this->session->idp != ''){
+				$id_pemesanan = $this->session->idp;
 				$data['rows'] = $this->model_app->view_where('pemesanan',array('id_pemesanan'=>$this->session->idp))->row_array();
 				$data['rowsk'] = $this->model_app->view_where('pelanggan',array('id_pelanggan'=>$this->session->id_pelanggan))->row_array();
-				$data['record'] = $this->model_app->view_join_where('detil_pemesanan','produk','id_produk',array('id_pemesanan'=>$this->session->idp),'id_detil_pemesanan','ASC');
+				$data['record'] = $this->db->query("SELECT *, SUM(a.qty) as qty, SUM(a.harga_pesan) as harga_pesan FROM detil_pemesanan a JOIN produk b ON a.id_produk = b.id_produk WHERE id_pemesanan = $id_pemesanan GROUP BY a.id_produk")->result_array();
 			}
             $data['title'] = 'Keranjang Belanja';
             $this->template->load('main/template_sub','main/member/view_keranjang',$data);
@@ -59,7 +64,12 @@ class Members extends CI_Controller {
 
     function keranjang_delete(){
 		$id = array('id_detil_pemesanan' => $this->uri->segment(3));
+		$id_produk = array('id_produk' => $this->uri->segment(4));
 		$this->model_app->delete('detil_pemesanan',$id);
+		$produk = $this->model_app->view_where('produk', $id_produk)->row_array();
+		$stok = $produk['stok'] + 1;
+		$data = array('stok' => $stok);
+		$this->model_app->update('produk',$data,$id_produk);
 		$isi_keranjang = $this->db->query("SELECT * FROM detil_pemesanan where id_pemesanan = '".$this->session->idp."'")->num_rows();
 		if ($isi_keranjang <= 0){
 			$idp = array('id_pemesanan' => $this->session->idp);

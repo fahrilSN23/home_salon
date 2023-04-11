@@ -67,6 +67,7 @@ if ($this->session->tipe==''){
                         <tr>
                         <th style='width:20px'>No</th>
                         <th>No Transaksi</th>
+                        <th>Nama Pelanggan</th>
                         <th>Tanggal Treatment</th>
                         <th>Produk</th>
                         <th>Harga</th>
@@ -78,8 +79,10 @@ if ($this->session->tipe==''){
                     <?php 
                     $no = 1;
                     foreach ($drecord as $row){
+                    $pel = $this->model_app->view_where('pelanggan',array('id_pelanggan'=>$row['id_pelanggan']))->row_array();
                     echo "<tr><td>$no</td>
                                 <td>$row[no_transaksi]</td>
+                                <td>$pel[nama]</td>
                                 <td>". tgl_indo($row['tanggal_treatment']) . "</td>
                                 <td>$row[nama]</td>
                                 <td>Rp. ".rupiah($row['harga'])."</td>

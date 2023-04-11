@@ -13,7 +13,8 @@
                         <th>Harga</th>
                         <th>Deskripsi</th>
                         <th>Waktu</th>
-                        <th>Aktif</th>
+                        <th>Stok</th>
+                        <th>Gambar</th>
                         <th style='width:120px'>Action</th>
                       </tr>
                     </thead>
@@ -21,30 +22,25 @@
                   <?php 
                     $no = 1;
                     foreach ($record as $row){
-                    // Jam
-                    if ($row['jam'] == null) {
-                      $jam = '0';
-                    }else{
-                      $jam = $row['jam'];
-                    }
                     // Menit
                     if ($row['menit'] == null) {
                       $menit = '0';
                     }else{
                       $menit = $row['menit'];
                     }
-                    // aktif
-                    if ($row['aktif'] == 1) {
-                      $aktif = '<span class="badge bg-green">Aktif</span>';
+                    // Gambar
+                    if ($row['gambar'] == null) {
+                      $gambar = 'no-image.jpg';
                     }else{
-                      $aktif = '<span class="badge bg-red">Tidak Aktif</span>';
+                      $gambar = $row['gambar'];
                     }
                     echo "<tr><td>$no</td>
                               <td>$row[nama]</td>
                               <td>Rp. " . rupiah($row['harga']) . "</td>
                               <td>$row[deskripsi]</td>
-                              <td>$jam Jam $menit Menit</td>
-                              <td>$aktif</td>
+                              <td>$menit Menit</td>
+                              <td>$row[stok]</td>
+                              <td><img src='" . base_url() . "/asset/foto_produk/$gambar' width='100px'></td>
                               <td><center>
                                 <a class='btn btn-warning btn-xs' title='Edit Data' href='".base_url()."administrator/edit_produk/$row[id_produk]'><span class='glyphicon glyphicon-edit'></span></a>
                                 <a class='btn btn-danger btn-xs' title='Delete Data' href='".base_url()."administrator/delete_produk/$row[id_produk]' onclick=\"return confirm('Apa anda yakin untuk hapus Data ini?')\"><span class='glyphicon glyphicon-remove'></span></a>

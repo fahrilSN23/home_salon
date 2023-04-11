@@ -25,6 +25,7 @@
                   <td>No</td>
                   <td>Jenis Perawatan</td>
                   <td>Produk Perawatan</td>
+                  <td>Qty</td>
                   <td>Harga</td>
                   <td>Opsi</td>
                 </tr>
@@ -37,8 +38,9 @@
                   <td><?=$no++?>.</td>
                   <td><?=$j['jenis_perawatan']?></a>
                   <td><b><?=$row['nama']?></b></td>
+                  <td><?=$row['qty']?></td>
                   <td>Rp. <?=rupiah($row['harga_pesan'])?></td>
-                  <td width='30px'><a id="hover" class='btn btn-danger btn-xs' title='Delete' href='<?=base_url()?>members/keranjang_delete/<?=$row['id_detil_pemesanan']?>'><span class='fa fa-trash'></span></a></td>
+                  <td width='30px'><a id="hover" class='btn btn-danger btn-xs' title='Delete' href='<?=base_url()?>members/keranjang_delete/<?=$row['id_detil_pemesanan']?>/<?=$row['id_produk']?>'><span class='fa fa-trash'></span></a></td>
                 </tr>
                 <?php }
                 $total = $this->db->query("SELECT sum(harga_pesan) as total FROM `detil_pemesanan` where id_pemesanan ='".$this->session->idp."'")->row_array();

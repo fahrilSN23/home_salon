@@ -247,13 +247,29 @@ class Administrator extends CI_Controller {
   function tambah_produk(){
     cek_session_admin();
     if (isset($_POST['submit'])){
-        $data = array('nama'=>$this->input->post('a'),
+        $config['upload_path'] = 'asset/foto_produk/';
+        $config['allowed_types'] = 'gif|jpg|png|JPG|JPEG';
+        $config['max_size'] = '5000'; // kb
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('gambar');
+        $hasil=$this->upload->data();
+        if ($hasil['file_name'] == '') {
+          $data = array('nama'=>$this->input->post('a'),
                     'harga'=>$this->input->post('b'),
                     'deskripsi'=>$this->input->post('c'),
-                    'jam'=>$this->input->post('d'),
                     'menit'=>$this->input->post('e'),
-                    'aktif'=>$this->input->post('f')
+                    'stok'=>$this->input->post('f')
                   );
+        } else {
+          $data = array('nama'=>$this->input->post('a'),
+                    'harga'=>$this->input->post('b'),
+                    'deskripsi'=>$this->input->post('c'),
+                    'menit'=>$this->input->post('e'),
+                    'stok'=>$this->input->post('f'),
+                    'gambar'=>$hasil['file_name']
+                  );
+        }
+        
         $this->model_app->insert('produk',$data);
         redirect('administrator/produkperawatan');
     }else{
@@ -265,12 +281,28 @@ class Administrator extends CI_Controller {
     cek_session_admin();
     $id = $this->uri->segment(3);
     if (isset($_POST['submit'])){
-       $data = array('nama'=>$this->input->post('a'),
+        $config['upload_path'] = 'asset/foto_produk/';
+        $config['allowed_types'] = 'gif|jpg|png|JPG|JPEG';
+        $config['max_size'] = '5000'; // kb
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('gambar');
+        $hasil=$this->upload->data();
+        if ($hasil['file_name'] == '') {
+          $data = array('nama'=>$this->input->post('a'),
                     'harga'=>$this->input->post('b'),
                     'deskripsi'=>$this->input->post('c'),
-                    'jam'=>$this->input->post('d'),
                     'menit'=>$this->input->post('e'),
-                    'aktif'=>$this->input->post('f'));
+                    'stok'=>$this->input->post('f')
+                  );
+        } else {
+          $data = array('nama'=>$this->input->post('a'),
+                    'harga'=>$this->input->post('b'),
+                    'deskripsi'=>$this->input->post('c'),
+                    'menit'=>$this->input->post('e'),
+                    'stok'=>$this->input->post('f'),
+                    'gambar'=>$hasil['file_name']
+                  );
+        }
         $where = array('id_produk' => $this->input->post('id'));
         $this->model_app->update('produk', $data, $where);
         redirect('administrator/produkperawatan');
@@ -283,6 +315,10 @@ class Administrator extends CI_Controller {
   function delete_produk(){
     cek_session_admin();
     $id = array('id_produk' => $this->uri->segment(3));
+    $cek_foto = $this->model_app->view_where('produk',$id)->row_array();
+    if ($cek_foto['gambar'] != null) {
+      unlink('asset/foto_produk/' . $cek_foto['gambar']);
+    }
         $this->model_app->delete('produk',$id);
         redirect($this->uri->segment(1).'/produkperawatan');
   }
@@ -437,6 +473,20 @@ class Administrator extends CI_Controller {
     }
   }
 
+  function hapus_bf(){
+    cek_session_admin();
+    $id = array('id_konfirmasi' => $this->uri->segment(3));;
+    $cek_foto = $this->model_app->view_where('konfirmasi',$id)->row_array();
+    unlink('asset/files/' . $cek_foto['bukti_transfer']);
+    $this->model_app->delete('konfirmasi',$id);
+    $data1 = array(
+      'status' => 0
+    );
+    $where1 = array('id_pemesanan' => $this->uri->segment(4));
+    $this->model_app->update('pemesanan', $data1, $where1);
+    redirect($this->uri->segment(1).'/detail_pemesanan/' . $this->uri->segment(4) . '/accept');
+  }
+
   function add_terapis() {
     cek_session_admin();
     $id = $this->uri->segment(3);
@@ -496,6 +546,16 @@ class Administrator extends CI_Controller {
     cek_session_admin();
     $c_order = $this->uri->segment(4);
     $id_pemesanan = $this->uri->segment(3);
+    $cekres = $this->model_app->view_where('pemesanan',array('id_pemesanan'=>$id_pemesanan))->row_array();
+    $dp = $this->db->query("SELECT *, SUM(qty) as qty FROM detil_pemesanan WHERE id_pemesanan = $id_pemesanan GROUP BY id_produk")->result_array();
+    foreach ($dp as $d) {
+      $stok_awal = $this->model_app->view_where('produk',array('id_produk'=>$d['id_produk']))->row_array();
+      $stok = $stok_awal['stok'] + $d['qty'];
+      $data_p = array('stok'=>$stok);
+      $where_p = array('id_produk'=>$d['id_produk']);
+      $this->model_app->update('produk', $data_p, $where_p);
+    }
+    $kons = $this->model_hs->profile_pelanggan($cekres['id_pelanggan'])->row_array();
     if ($c_order == 1 ) {
       $data = array('c_order'=>$c_order);
       $where = array('id_pemesanan' => $id_pemesanan);
@@ -506,6 +566,19 @@ class Administrator extends CI_Controller {
       $where = array('id_pemesanan' => $id_pemesanan);
     }
     $this->model_app->update('pemesanan', $data, $where);
+    $phone = $kons['no_telp'];
+    $msg = "*HALLO " . $kons['nama'] . "*
+  ============================
+  
+  Pesanan anda dengan *No Transaksi : " . $cekres['no_transaksi'] . " - TELAH DIBATALKAN*
+  ============================
+  
+  Mohon tunggu informasi selanjutnya untuk penerimaan refund dari admin.
+  ============================
+  
+  Selengkapnya Cek Disini : " . base_url('Members/detail_pemesanan/' . $cekres['id_pemesanan']);
+
+    $this->model_hs->kirimPesanWA($phone,$msg);
     
     redirect('administrator/pemesanan');
   }

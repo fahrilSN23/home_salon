@@ -11,8 +11,13 @@
                     <th width='140px' scope='row'>Nomor Transaksi</th>
                     <td><?php echo "$rows[no_transaksi]"; ?></td>
                     <th width='140px'>Bukti Bayar</th>
-                    <?php if ($bf['bukti_transfer'] == ''){ $bukti_bayar ='blank.png'; }else{ $bukti_bayar = $bf['bukti_transfer']; } ?>
-                    <td rowspan="4"><a href="<?=base_url()?>asset/files/<?=$bukti_bayar?>" target="_blank"><img src="<?=base_url()?>asset/files/<?=$bukti_bayar?>" width="100px"></a></td>
+                    <?php if ($bf['bukti_transfer'] == null){ $bukti_bayar ='blank.png'; }else{ $bukti_bayar = $bf['bukti_transfer']; } ?>
+                    <td rowspan="4">
+                        <a href="<?=base_url()?>asset/files/<?=$bukti_bayar?>" target="_blank"><img src="<?=base_url()?>asset/files/<?=$bukti_bayar?>" width="100px"></a>
+                        <?php if ($bf['bukti_transfer'] != '') { ?>
+                        <a class='btn btn-danger btn-xs' title='Hapus Bukti Transfer' href='<?=base_url()?>administrator/hapus_bf/<?=$bf['id_konfirmasi']?>/<?=$rows['id_pemesanan']?>' onclick="return confirm('Apa anda yakin ingin menghapus Bukti Transfer ini?')"><span class='glyphicon glyphicon-remove'></span></a>
+                        <?php } ?>
+                    </td>
                 </tr>
                 <tr>
                     <th width='140px' scope='row'>Nomor Antrian</th>

@@ -8,7 +8,7 @@ class Main extends CI_Controller {
 		$data['iden'] = iden();
 		$data['tk'] = $this->model_app->view_where('tentangkami', array('id' => 1))->row_array();
 		$data['record'] = $this->model_app->view_ordering('jenis','id_jenis','ASC');
-		$data['record1'] = $this->db->query("SELECT * FROM produk WHERE aktif = 1 ORDER BY RAND() LIMIT 3");
+		$data['record1'] = $this->db->query("SELECT * FROM produk WHERE stok >= 1 ORDER BY RAND() LIMIT 3");
 		$this->template->load('main/template','main/content',$data);
 	}
 }
